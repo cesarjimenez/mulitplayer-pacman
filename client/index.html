@@ -1,5 +1,50 @@
 <html>
-<body>
+<head>
+  <style>
+    table {
+      border: 1px solid black;
+    }
 
+    td {
+      padding: 5em;
+    }
+
+    td:hover {
+      background-color: red;
+    }
+  </style>
+</head>
+<body onload="init()">
+  <table>
+    <tr>
+      <td id="td00">(0, 0)</td>
+      <td id="td01">(0, 1)</td>
+    </tr>
+    <tr>
+      <td id="td10">(1, 0)</td>
+      <td id="td11">(1, 1)</td>
+    </tr>
+  </table>
+
+  <script>
+    function init() {
+      var maxX = 1;
+      var maxY = 1;
+
+      for (var i = 0; i <= maxX; i++) {
+        for (var j = 0; j <= maxY; j++) {
+          var td = document.getElementById("td" + i + j);
+          var onClickFunctionRef = sendCoordenates(i, j);
+          td.onclick = onClickFunctionRef;
+        }
+      }
+    }
+
+    function sendCoordenates(x, y) {
+      return (function() {
+        window.alert("(" + x + ", " + y + ")");
+      });
+    }
+  </script>
 </body>
 </html>
