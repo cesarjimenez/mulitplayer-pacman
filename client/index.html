@@ -46,7 +46,7 @@
         coords.x = x;
         coords.y = y;
         var client = new XMLHttpRequest();
-        client.open("POST", "http:/localhost:5000/newdata/pacman");
+        client.open("POST", "/newdata/pacman");
         client.onload = function () {
           // do something to response
           console.log(this.responseText);
