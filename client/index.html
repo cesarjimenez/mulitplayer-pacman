@@ -29,7 +29,15 @@
   <script>
 
     var DataSender = {
-      send: function(x, y) {
+
+      /*
+       * Sends data to server.
+       * 
+       * @param x X coordinate
+       * @param y Y coordinate
+       * @param {requestCallback} callback - The callback that handles the response
+       */
+      send: function(x, y, callback) {
         return function() {
           console.log(x + ", " + y);
           var coords = new Object();
@@ -37,9 +45,8 @@
           coords.y = y;
           var client = new XMLHttpRequest();
           client.open("POST", "/newdata/pacman");
-          client.onload = function () {
-            // do something to response
-            console.log(this.responseText);
+          client.onload = function() {
+            callback(this.responseText);
           };
           client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
           client.send("newdata=" + JSON.stringify(coords));
@@ -54,10 +61,14 @@
       for (var i = 0; i <= maxX; i++) {
         for (var j = 0; j <= maxY; j++) {
           var td = document.getElementById("td" + i + j);
-          var onClickFunctionRef = DataSender.send(i, j);
+          var onClickFunctionRef = DataSender.send(i, j, onDataSent);
           td.onclick = onClickFunctionRef;
         }
       }
+    }
+
+    function onDataSent(json) {
+      console.log("Received: " + json);
     }
   </script>
 </body>
