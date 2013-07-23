@@ -25,6 +25,8 @@
       <td id="td11">(1, 1)</td>
     </tr>
   </table>
+  
+  <div id="status"></div>
 
   <script>
 
@@ -68,7 +70,7 @@
     }
 
     function onDataSent(json) {
-      console.log("Received: " + json);
+      document.getElementById("status").innerHTML = json;
     }
   </script>
 </body>
