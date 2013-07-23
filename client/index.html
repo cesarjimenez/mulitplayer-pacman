@@ -27,6 +27,26 @@
   </table>
 
   <script>
+
+    var DataSender = {
+      send: function(x, y) {
+        return function() {
+          console.log(x + ", " + y);
+          var coords = new Object();
+          coords.x = x;
+          coords.y = y;
+          var client = new XMLHttpRequest();
+          client.open("POST", "/newdata/pacman");
+          client.onload = function () {
+            // do something to response
+            console.log(this.responseText);
+          };
+          client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+          client.send("newdata=" + JSON.stringify(coords));
+        }
+      }
+    }
+
     function init() {
       var maxX = 1;
       var maxY = 1;
@@ -34,26 +54,10 @@
       for (var i = 0; i <= maxX; i++) {
         for (var j = 0; j <= maxY; j++) {
           var td = document.getElementById("td" + i + j);
-          var onClickFunctionRef = sendCoordenates(i, j);
+          var onClickFunctionRef = DataSender.send(i, j);
           td.onclick = onClickFunctionRef;
         }
       }
-    }
-
-    function sendCoordenates(x, y) {
-      return (function() {
-        var coords = new Object();
-        coords.x = x;
-        coords.y = y;
-        var client = new XMLHttpRequest();
-        client.open("POST", "/newdata/pacman");
-        client.onload = function () {
-          // do something to response
-          console.log(this.responseText);
-        };
-        client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        client.send("newdata=" + JSON.stringify(coords));
-      });
     }
   </script>
 </body>
